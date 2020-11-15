@@ -19,15 +19,19 @@
 
         <x-jet-label for="title" value="{{ __('Title')}}"/> 
         <x-jet-input id='title' class='block mt-1 w-full' type='text' wire:model.debounce.800ms='title'/>  
+        @error('title') <span class="error">{{ $message }}</span>@enderror
+            
+ 
         </div>
 
         <div class="mt-4">
 
         <x-jet-label for="slug" value="{{ __('Slug')}}"/> 
         <x-jet-input id='slug' class='block mt-1 w-full' type='text' wire:model.debounce.800ms='slug'/>  
+        @error('slug') <span class="error">{{ $message }}</span>@enderror
         </div>
 
-        <div class="mt-4">
+         <div class="mt-4">
 
             <x-jet-label for="slug" value="{{ __('Content')}}"/> 
    
@@ -40,7 +44,7 @@
         </div>
     </div>
 </div>
-
+@error('content') <span class="error">{{ $message }}</span>@enderror
 
             </div>
 

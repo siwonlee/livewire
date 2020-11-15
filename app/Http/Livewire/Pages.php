@@ -9,10 +9,31 @@ use App\Models\Page;
 class Pages extends Component
 {
 
-    public $modalFormVisible = true;    
+    public $modalFormVisible = false;    
     public $slug;
     public $title;
     public $content;
+
+    // public function rules(){
+    //     return [
+    //         'title' => 'required',
+    //         'slug' => 'required', 
+    //         'content' => 'required',
+    //         ];
+
+    // }
+
+    // public function updatedTitle($value){
+
+    //     $this->slug = $value;
+    // }
+
+    protected $rules = [
+
+        'title' => 'required',
+        'slug' => 'required', 
+        'content' => 'required',   
+    ];
 
     public function createShowModal(){ 
 
@@ -23,15 +44,18 @@ class Pages extends Component
 
     public function render()
     {
-        return view('livewire.pages');
+        return view('livewire.pages',[
+'data' => $this->read();
+
+        ]);
     }
 
     public function create()
     {
-
-Page::create($this->modelData());
-$this->modalFormVisible = false;
-$this->resetVars();
+        $this->validate();
+        Page::create($this->modelData());
+        $this->modalFormVisible = false;
+        $this->resetVars();
 
 
          return view('livewire.pages');
@@ -55,5 +79,10 @@ $this->resetVars();
         $this->slug = null;
         $this->content = null;
         
+     }
+
+     public function read(){
+
+return Page::paginate(5);
      }
 }
