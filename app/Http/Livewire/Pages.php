@@ -4,15 +4,17 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Page;
-
+use Livewire\WithPagination;
 
 class Pages extends Component
 {
 
+    use WithPagination;
     public $modalFormVisible = false;    
     public $slug;
     public $title;
     public $content;
+    public $modelId;
 
     // public function rules(){
     //     return [
@@ -37,15 +39,18 @@ class Pages extends Component
 
     public function createShowModal(){ 
 
+        $this->resetValidation();
+        $this->resetVars();
         $this-> modalFormVisible = true;
 
 
     }
+ 
 
     public function render()
     {
         return view('livewire.pages',[
-'data' => $this->read();
+'data' => $this->read()
 
         ]);
     }
@@ -75,6 +80,9 @@ class Pages extends Component
 
      public function resetVars(){
 
+
+        $this->modelId = null;
+        
         $this->title = null;
         $this->slug = null;
         $this->content = null;
@@ -83,6 +91,38 @@ class Pages extends Component
 
      public function read(){
 
-return Page::paginate(5);
+return Page::orderBy('created_at','desc')->paginate(5);
+     }
+
+     public function updateShowModal($id){
+        $this->resetVars();
+        $this->resetValidation();
+$this->modelId = $id;
+$this->modalFormVisible = true;
+$this->loadModel();
+
+
+     }
+
+     public function loadModel(){
+
+        $data = Page::find($this->modelId);
+        $this->title = $data -> title;
+        $this->slug = $data -> slug;
+        $this->content = $data -> content;
+        
+
+     }
+
+     public function update(){
+
+        $this->validate();
+        Page::find($this->modelId)->update($this->modelData());
+        $this->modalFormVisible = false;
+        $this->resetVars();
+
+
+         return view('livewire.pages');
+
      }
 }

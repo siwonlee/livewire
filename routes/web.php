@@ -33,5 +33,9 @@ Route::group(['middleware'=>['auth:sanctum','verified',]], function(){
     })->name('pages');
 
 
+    Route::get('/search', function(){
+        return view('admin.search');
+    })->name('search');
+
 });
 
