@@ -15,6 +15,7 @@ class Pages extends Component
     public $title;
     public $content;
     public $modelId;
+    public $deletemodalFormVisible = false;
 
     // public function rules(){
     //     return [
@@ -46,6 +47,7 @@ class Pages extends Component
 
     }
  
+
 
     public function render()
     {
@@ -97,12 +99,41 @@ return Page::orderBy('created_at','desc')->paginate(5);
      public function updateShowModal($id){
         $this->resetVars();
         $this->resetValidation();
-$this->modelId = $id;
-$this->modalFormVisible = true;
-$this->loadModel();
+        $this->modelId = $id;
+        $this->modalFormVisible = true;
+        $this->loadModel();
 
 
      }
+
+
+     public function deleteShowModal($id){
+
+        $this-> modelId = $id;
+ 
+        $this-> deletemodalFormVisible = true;
+        //$this->delete();
+
+
+    }
+
+    public function deleteItem(){
+
+  
+        Page::destroy($this->modelId);
+        $this->deletemodalFormVisible = false;
+        $this->resetPage();
+
+    }
+
+        public function mount(){
+
+        $this->resetPage();
+
+            
+        }
+
+
 
      public function loadModel(){
 
