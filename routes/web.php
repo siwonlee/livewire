@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Frontpage;
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +44,6 @@ Route::group(['middleware'=>['auth:sanctum','verified',]], function(){
 
 });
 
+
+//Route::get('/', Frontpage::class);
+Route::get('/{urlslug}', Frontpage::class);

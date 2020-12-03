@@ -25,8 +25,8 @@
     @foreach ($data as $item )
             <tr>
             <td class="px-6 py-4 text-sm whitespace-no-wrap">{{$item->title}}</td>
-         <td class="px-6 py-4 text-sm whitespace-no-wrap">{{$item->slug}}</td>
-            <td class="px-6 py-4 text-sm whitespace-no-wrap">{!! $item->content !!}</td>
+            <td class="px-6 py-4 text-sm whitespace-no-wrap"><a href="{{url($item->slug)}}">{{$item->slug}}</a></td>
+            <td class="px-6 py-4 text-sm ">{!! $item->content !!}</td>
             <td class="px-6 py-4 text-sm whitespace-no-wrap">
                 
                 <x-jet-button wire:click="updateShowModal({{$item->id}})">
